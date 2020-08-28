@@ -12,6 +12,6 @@ class UserSeeder extends \Illuminate\Database\Seeder
      */
     public function run()
     {
-        $user = factory(App\User::class,100)->create();
+        //$user = factory(\App\Models\User::class,100)->create();
     }
 }
