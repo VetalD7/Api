@@ -3,14 +3,28 @@
 namespace App\Service;
 
 use App\Contracts\ServiceInterface;
+use App\Filters\ArticleFilter;
+use App\Repository\ArticleRepository;
 use Illuminate\Http\Request;
 
 /**
  * Class ArticleService
  * @package App\Service
  */
-class ArticleService implements ServiceInterface
+class ArticleService
 {
+    /**
+     * @var ArticleRepository
+     */
+    public $articleRepository;
+
+    /**
+     *
+     */
+    public function __construct(ArticleRepository $articleRepository)
+    {
+        $this->articleRepository = $articleRepository;
+    }
     /**
      * @param Request|null $request
      * @return mixed|void
@@ -25,13 +39,13 @@ class ArticleService implements ServiceInterface
         // TODO: Implement delete() method.
     }
 
-    public function list(?Request $request)
-    {
-        // TODO: Implement list() method.
-    }
-
     public function get($id, ?Request $request)
     {
         // TODO: Implement get() method.
+    }
+
+    public function list(Request $request)
+    {
+        return $this->articleRepository->list(new ArticleFilter($request));
     }
 }

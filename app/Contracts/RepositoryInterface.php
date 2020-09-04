@@ -3,8 +3,8 @@
 namespace App\Contracts;
 
 
+use App\Core\AbstractFilter;
 use Illuminate\Http\Request;
-use Intervention\Image\Filters\FilterInterface;
 
 /**
  * Interface RepositoryInterface
@@ -12,11 +12,12 @@ use Intervention\Image\Filters\FilterInterface;
  */
 interface RepositoryInterface
 {
+    const PAGINATE = 15;
     /**
      * @param FilterInterface|null $filter
      * @return mixed
      */
-    public function list(?FilterInterface $filter);
+    public function list(?AbstractFilter $filter);
 
     /**
      * @param int|null $id

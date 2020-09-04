@@ -26,7 +26,7 @@ interface ServiceInterface
      * @param Request|null $request
      * @return mixed
      */
-    public function list(?Request $request);
+    public function list(Request $request);
 
     /**
      * @param $id
