@@ -4,7 +4,6 @@ namespace App\Filters;
 
 use App\Core\AbstractFilter;
 use Illuminate\Database\Query\Builder;
-use Illuminate\Http\Request;
 
 /**
  * Class ArticleFilter
@@ -12,10 +11,6 @@ use Illuminate\Http\Request;
  */
 class ArticleFilter extends AbstractFilter
 {
-    public function __construct(Request $request)
-    {
-        parent::__construct($request);
-    }
 
     public $allowedFilters = [
         'id' => self::FILTER_IN_TYPE,
@@ -26,6 +21,25 @@ class ArticleFilter extends AbstractFilter
 
     public function getQuery($query)
     {
-        dd($this->filter);
+
+        foreach ($this->filter as $key => $filter) {
+            switch ($this->allowedFilters[$key]) {
+                case self::FILTER_IN_TYPE:
+                    if (!is_array($filter)) {
+                        $query->whereIn($key, [$filter]);
+                    } else {
+                        $query->whereIn($key, $filter);
+                    }
+
+                    break;
+                case self::FILTER_LIKE_TYPE:
+                    $query->where($key, 'LIKE', '%'.$filter.'%');
+                    break;
+//                case self::FILTER_NOT_IN_TYPE:
+//                    $query->whereNotIn($key, $filter);
+//                    break;
+            }
+        }
+        return $query;
     }
 }

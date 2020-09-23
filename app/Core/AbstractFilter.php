@@ -12,39 +12,48 @@ use Illuminate\Http\Request;
  */
 abstract class AbstractFilter implements FilterInterface
 {
+    /**
+     * @var
+     */
     public $allowedFilters;
     /**
      * @var array
      */
     public $filter;
-    /**
-     * @var Request
-     */
-    public $request;
 
+    /**
+     * AbstractFilter constructor.
+     * @param Request $request
+     */
     public function __construct(Request  $request)
     {
-        $this->request = $request->all();
+        $this->filterRequest($request->all());
     }
 
-    public function filterRequest()
+    /**
+     * @param $request
+     */
+    public function filterRequest(array $request): void
     {
-        foreach ( $this->request->all() as $item) {
-            if (in_array($item, $this->allowedFilters)) {
-                $allowed[] = $item;
+        foreach ($request as $key => $item) {
+            if (array_key_exists($key, $this->allowedFilters)) {
+                $allowed[$key] = $item;
             }
         }
         $this->setFilter($allowed);
     }
 
-    public function setFilter(array $array)
+    public function setFilter(array $array):self
     {
         $this->filter = $array;
 
         return $this;
     }
 
-    public function getFilter()
+    /**
+     * @return $this
+     */
+    public function getFilter():array
     {
         return $this->filter;
     }

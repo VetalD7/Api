@@ -17,6 +17,10 @@ class ArticleController extends Controller
      */
     public $service;
 
+    /**
+     * ArticleController constructor.
+     * @param ArticleService $service
+     */
     public function __construct(ArticleService $service)
     {
         $this->service = $service;
