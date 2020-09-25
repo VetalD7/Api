@@ -21,7 +21,13 @@ Route::group(['middleware'=>'api', 'namespace' => 'Auth', 'prefix' => 'auth'], f
     Route::post('me', 'AuthController@me');
 });
 
+
+
 Route::group(['middleware'=>'api'], function () {
+
+    Route::group(['namespace' => 'Product'], function () {
+        Route::resource( 'product','ProductController');
+    });
     Route::resource( 'articles','ArticleController');
 });
 
